@@ -296,6 +296,19 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
+  require 'omniauth-oktaoauth'
+  config.omniauth(:oktaoauth,
+                  ENV['OKTA_CLIENT_ID'],
+                  ENV['OKTA_CLIENT_SECRET'],
+                  scope: 'openid profile email',
+                  fields: %w[profile email],
+                  client_options: { site: ENV['OKTA_ISSUER'], authorize_url: ENV['OKTA_ISSUER'] + '/v1/authorize',
+                                    token_url: ENV['OKTA_ISSUER'] + '/v1/token' },
+                  redirect_uri: ENV['OKTA_REDIRECT_URI'],
+                  auth_server_id: ENV['OKTA_AUTH_SERVER_ID'],
+                  issuer: ENV['OKTA_ISSUER'],
+                  strategy_class: OmniAuth::Strategies::Oktaoauth)
+
   # ==> Turbolinks configuration
   # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
   #
