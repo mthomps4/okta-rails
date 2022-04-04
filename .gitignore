@@ -38,3 +38,5 @@ yarn-debug.log*
 .env
 .env.*
 !.env.example
+
+.okta.env
